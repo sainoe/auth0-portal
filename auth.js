@@ -7,6 +7,10 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+
+
+
+
 const util = require("util");
 const url = require("url");
 const querystring = require("querystring");
@@ -19,16 +23,14 @@ require("dotenv").config();
 
 router.get(
     "/login",
-    passport.authenticate("auth0", {
-        scope: "openid email profile"
-    }),
+    passport.authenticate("provider"),
     (req, res) => {
         res.redirect("/");
     }
 );
 
 router.get("/callback", (req, res, next) => {
-    passport.authenticate("auth0", (err, user, info) => {
+    passport.authenticate("provider", (err, user, info) => {
         if (err) {
             return next(err);
         }
